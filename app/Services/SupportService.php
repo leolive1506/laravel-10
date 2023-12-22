@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\CreateSupportDTO;
 use App\DTO\UpdateSupportDTO;
+use App\Repositories\PaginationInterface;
 use App\Repositories\SupportRepositoryInterface;
 use stdClass;
 
@@ -13,6 +14,14 @@ class SupportService
         protected SupportRepositoryInterface $repository
     ) {
 
+    }
+
+    public function paginate(
+        int $page = 1,
+        int $totalPerPage = 15,
+        string $filter = null
+    ): PaginationInterface {
+        return $this->repository->paginate($page, $totalPerPage, $filter);
     }
 
     public function getAll(string $filter = null): array
@@ -37,6 +46,6 @@ class SupportService
 
     public function delete(string $id): void
     {
-        $this->repository->delete();
+        $this->repository->delete($id);
     }
 }
